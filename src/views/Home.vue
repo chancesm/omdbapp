@@ -1,12 +1,17 @@
 <template>
-  <Search />
+  <div class="home">
+    <Search />
+    <SearchResults />
+  </div>
 </template>
 
 <script>
   import Search from '../components/Search'
+  import SearchResults from '../components/SearchResults'
   export default {
     components: {
-      Search
+      Search,
+      SearchResults
     }
   }
 </script>

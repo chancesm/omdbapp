@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-toolbar app>
+    <v-toolbar>
       <v-spacer></v-spacer>
       <v-toolbar-title class="headline text-uppercase">
         <span>OMDB</span>
@@ -8,7 +8,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
-
+    <v-progress-linear class="mt-0 z-14" :indeterminate="loading"></v-progress-linear>
     <v-content>
       <router-view />
     </v-content>
@@ -25,6 +25,11 @@ export default {
   data () {
     return {
       //
+    }
+  },
+  computed: {
+    loading() {
+      return this.$store.state.loading
     }
   }
 }
