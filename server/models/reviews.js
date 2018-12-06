@@ -7,11 +7,10 @@ var Sequelize = db.Sequelize;
 
 var Reviews = sequelize.define("reviews", {
   reviewId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  movieId: Sequelize.INTEGER,
+  movieId: Sequelize.STRING,
   userId: Sequelize.INTEGER,
   stars: Sequelize.INTEGER,
-  review: Sequelize.
+  review: Sequelize.TEXT
 });
 
 module.exports = Reviews;
-STRING

@@ -1,5 +1,10 @@
 # omdbapp
+## Documentation
+[API Server](Server.md)
 
+[Vue Application](Vue.md)
+
+---
 ## Project setup
 ```
 npm install
@@ -15,6 +20,16 @@ npm run serve
 npm run build
 ```
 
+### Run the API Server
+```
+npm run server
+```
+
+### Build the app and run the API Server
+```
+npm run start
+```
+
 ### Run your tests
 ```
 npm run test
@@ -27,3 +42,4 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
