@@ -1,0 +1,7 @@
+Resources:
+http://expressjs.com/
+http://docs.sequelizejs.com/
+https://vuejs.org/v2/guide/
+
+
+Random Notes:
