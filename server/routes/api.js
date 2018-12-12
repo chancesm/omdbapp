@@ -30,3 +30,43 @@ api.get('/search', (req,res) => {
         res.json([])    
     }
 })
+api.get('/movie/:id', (req,res) => {
+    if(req.params.id){
+        let url = `${config.ENDPOINT}${config.APIKEY}&i=${req.params.id}`
+        console.log(url)
+        Promise.all([
+            axios.get(url),
+            Reviews.findAll({
+                where: {movieId: req.params.id},
+                raw:true
+            })
+        ])
+        .then(([{data},reviews]) => {
+            let movie = {...data,reviews}
+            res.json(movie)
+            //console.log(reviews)
+        })
+    }
+    else {
+        res.json({})
+    }
+}) 
+
+api.post('/sendReview', (req,res) => {
+    Reviews.create({
+        movieId: req.body.movieId,
+        userId: +req.body.userId,
+        stars: +req.body.stars,
+        review: req.body.reviewText
+    })
+    .then(newReview => {
+        console.log("REVIEW CREATED: ", newReview)
+        res.sendStatus(200)
+    })
+
+})
+
+
+     
+
+

@@ -11,6 +11,6 @@ var Reviews = sequelize.define("reviews", {
   userId: Sequelize.INTEGER,
   stars: Sequelize.INTEGER,
   review: Sequelize.TEXT
-});
+},{timestamps: false});
 
 module.exports = Reviews;

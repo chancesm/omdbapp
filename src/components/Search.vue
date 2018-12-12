@@ -17,8 +17,8 @@
 </template>
 
 <script>
-  let typingTimer;                //timer identifier
-  let doneTypingInterval = 1000;  //time in ms, 5 second for example
+  let typingTimer;                
+  let doneTypingInterval = 1000;  
   export default {
     data() {
       return {
@@ -37,6 +37,7 @@
           }
           else {
             this.$store.commit("setLoading",false)
+            this.$store.commit("setResults",[])
           }
         }, doneTypingInterval);
         
