@@ -42,8 +42,9 @@
                         </v-card-title>
                     </v-card>
                 </v-flex>
+                
                 <v-flex xs12>
-                    <v-form ref="form" @submit.prevent="submit" v-model="valid" lazy-validation>
+                    <v-form v-if="user" ref="form" @submit.prevent="submit" v-model="valid" lazy-validation>
                         <v-text-field
                             v-model="Review"
                             :rules = "reviewRules"
@@ -63,6 +64,9 @@
                         </v-btn>
                         <v-btn @click="clear">clear</v-btn>
                     </v-form>
+                    <v-card v-else>
+                        <p class="text-xs-center headline">Please Log In To Leave Reviews</p>
+                    </v-card>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -115,6 +119,9 @@ export default {
         },
         stars() {
             return +this.select[0]
+        },
+        user() {
+            return this.$store.state.user
         }
     },
     mounted() {

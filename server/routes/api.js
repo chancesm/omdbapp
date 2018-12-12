@@ -32,7 +32,7 @@ api.get('/search', (req,res) => {
 })
 api.get('/movie/:id', (req,res) => {
     if(req.params.id){
-        let url = `${config.ENDPOINT}${config.APIKEY}&i=${req.params.id}`
+        let url = `${config.ENDPOINT}${config.APIKEY}&plot=full&i=${req.params.id}`
         console.log(url)
         Promise.all([
             axios.get(url),
@@ -64,6 +64,42 @@ api.post('/sendReview', (req,res) => {
         res.sendStatus(200)
     })
 
+})
+
+api.post('/userLogin', (req,res) => {
+    Users.findAll({
+        where: {
+            userName: req.body.uname,
+            password: req.body.upass
+        },
+        raw:true
+    })
+    .then(foundUser => {
+        console.log("USER LOGGED IN", foundUser)
+        res.json(foundUser)
+        req.session.user = foundUser
+    })
+    .catch(e => {
+        console.error(e)
+        res.sendStatus(403)
+    })
+})
+
+api.delete('/userLogout', (req,res) => {
+   req.session.user = null
+})
+
+api.post('/userRegister', (req,res) => {
+    Users.create({
+        userName: req.body.uname,
+        password: req.body.upass,
+        email:"asdf@asdf.net"
+    },{raw:true})
+    .then(newUser => {
+        console.log("USER REGISTERED", newUser)
+        req.session.user=newUser
+        res.json(newUser)
+    })
 })
 
 

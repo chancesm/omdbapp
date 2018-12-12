@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    user:null,
     loading: false,
     results:[],
     movieData:{},
@@ -69,6 +70,29 @@ export default new Vuex.Store({
         ...formdata,userId:0
       })
       
+    },
+    userLogin({state,commit}, formdata) {
+      console.log("USER LOGIN")
+      const url = `${state.endpoint}/userLogin`
+      axios.post(url, {
+        ...formdata
+      })
+      .then(user => {
+        console.log(user)
+      })
+    },
+    userLogout({state,commit}) {
+      console.log("USER LOGOUT")
+      const url = `${state.endpoint}/userLogout` 
+      axios.delete(url)     
+    },
+    userRegister({state,commit}, formdata) {
+      console.log("USER REGISTER")
+      const url = `${state.endpoint}/userRegister`
+      axios.post(url, formdata)
+      .then(user => {
+        console.log(user)
+      })
     }
   }
 })
