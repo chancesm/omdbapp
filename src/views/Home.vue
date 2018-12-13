@@ -12,6 +12,9 @@
     components: {
       Search,
       SearchResults
+    },
+    mounted() {
+      this.$store.commit("setPage", 'search')
     }
   }
 </script>

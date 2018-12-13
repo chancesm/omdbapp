@@ -1,13 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-Vue.use(Vuex)
 
+import createPersistedState from 'vuex-persistedstate'
+
+Vue.use(Vuex)
+axios.defaults.withCredentials = true
 export default new Vuex.Store({
   state: {
     user:null,
     loading: false,
     results:[],
+    page:"",
     movieData:{},
     endpoint: "http://localhost:3000/api"
   },
@@ -20,6 +24,12 @@ export default new Vuex.Store({
     },
     setMovieData(state,data) {
       state.movieData = data;
+    },
+    setUser(state,data) {
+      state.user = data;
+    },
+    setPage(state, page) {
+      state.page = page;
     }
   },
   actions: {
@@ -78,21 +88,22 @@ export default new Vuex.Store({
         ...formdata
       })
       .then(user => {
-        console.log(user)
+        commit("setUser", user.data)
       })
     },
     userLogout({state,commit}) {
       console.log("USER LOGOUT")
       const url = `${state.endpoint}/userLogout` 
-      axios.delete(url)     
+      axios.delete(url)
+      commit("setUser", null)   
     },
     userRegister({state,commit}, formdata) {
       console.log("USER REGISTER")
       const url = `${state.endpoint}/userRegister`
       axios.post(url, formdata)
       .then(user => {
-        console.log(user)
+        commit("setUser", user.data)
       })
     }
-  }
+  },plugins: [createPersistedState()]
 })

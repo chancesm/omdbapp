@@ -7,7 +7,12 @@ const config = require('../config.json')
 //console.log("CONFIG",config)
 const axios = require('axios')
 
-
+let protect = (req,res,next) => {
+    if(req.session.user) {
+        next()
+    }
+    else res.sendStatus(403)
+}
 api.get('/', (req,res) => {
     res.sendStatus(200)
 })
@@ -52,7 +57,7 @@ api.get('/movie/:id', (req,res) => {
     }
 }) 
 
-api.post('/sendReview', (req,res) => {
+api.post('/sendReview',protect, (req,res) => {
     Reviews.create({
         movieId: req.body.movieId,
         userId: +req.body.userId,
@@ -75,9 +80,10 @@ api.post('/userLogin', (req,res) => {
         raw:true
     })
     .then(foundUser => {
-        console.log("USER LOGGED IN", foundUser)
-        res.json(foundUser)
-        req.session.user = foundUser
+        console.log("USER LOGGED IN", foundUser[0])
+        res.json(foundUser[0])
+        req.session.user = foundUser[0]
+        req.session.save()
     })
     .catch(e => {
         console.error(e)
@@ -87,6 +93,8 @@ api.post('/userLogin', (req,res) => {
 
 api.delete('/userLogout', (req,res) => {
    req.session.user = null
+   req.session.save()
+   res.sendStatus(200)
 })
 
 api.post('/userRegister', (req,res) => {
@@ -96,10 +104,14 @@ api.post('/userRegister', (req,res) => {
         email:"asdf@asdf.net"
     },{raw:true})
     .then(newUser => {
-        console.log("USER REGISTERED", newUser)
-        req.session.user=newUser
+        console.log("USER REGISTERED", newUser.dataValues)
+        req.session.user=newUser.dataValues
+        req.session.save()
         res.json(newUser)
     })
+})
+api.get('/user',(req,res) => {
+    res.json(req.session.user)
 })
 
 

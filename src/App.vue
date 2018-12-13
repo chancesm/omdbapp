@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-toolbar>
+      <v-btn v-if="page == 'movie'" color="blue darken-1" flat to="/">Back to Search</v-btn>
       <v-spacer></v-spacer>
       <v-toolbar-title to="/" class="headline text-uppercase">
         <span>OMDB</span>
@@ -92,6 +93,9 @@ export default {
     },
     user() {
       return this.$store.state.user
+    },
+    page() {
+      return this.$store.state.page
     }
   },
   methods: {

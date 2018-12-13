@@ -126,6 +126,7 @@ export default {
     },
     mounted() {
         this.$store.dispatch("fetchMovie",this.movieID);
+        this.$store.commit("setPage",'movie')
     }
 }
 
